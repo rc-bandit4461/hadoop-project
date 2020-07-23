@@ -62,15 +62,10 @@ public class TempStat {
                 Text station = new Text(fields[0].replaceAll("\"", ""));
                 double temp = Double.parseDouble(fields[13].replaceAll("\"", "").replace(',', '.'));
                 MapWritable map = new MapWritable();
-                MapWritable inputMap = new MapWritable();
                 map.put(new Text("fileName"), new Text(fileName));
                 map.put(new Text("filePath"), new Text(filePath));
                 map.put(new Text("station"), new Text(station));
                 map.put(new Text("temp"), new DoubleWritable(temp));
-                // inputMap.put(new Text("year"), new
-                // Text(filePath.substring(filePath.lastIndexOf("/") + 1)));
-                // inputMap.put(new Text("station"), new Text(station.toString()));
-
                 context.write(new Text(filePath.substring(filePath.lastIndexOf("/") + 1) + "_" + station.toString()),
                         map);
 
@@ -97,8 +92,6 @@ public class TempStat {
                 DoubleWritable dWritable = (DoubleWritable) map.get(new Text("temp"));
                 arr.add(dWritable.get());
             }
-            JSONArray fileNameJsonArray = new JSONArray(fileNames);
-            JSONArray filePathJsonArray = new JSONArray(filePaths);
             Integer len = arr.size();
             min = max = arr.get(0);
             for (double v : arr) {
