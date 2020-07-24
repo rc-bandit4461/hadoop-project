@@ -61,6 +61,7 @@ public class TempStat {
                 String[] fields = value.toString().split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 Text station = new Text(fields[0].replaceAll("\"", ""));
                 double temp = Double.parseDouble(fields[13].replaceAll("\"", "").replace(',', '.'));
+                temp = (temp - 32)/1.8;
                 MapWritable map = new MapWritable();
                 map.put(new Text("fileName"), new Text(fileName));
                 map.put(new Text("filePath"), new Text(filePath));
